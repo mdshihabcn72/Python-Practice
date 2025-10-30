@@ -1,0 +1,263 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "gpuType": "T4"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Bc9TcTmkmPHG",
+        "outputId": "1dafa51c-bc19-4c8f-b364-069c52a6dc31"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Even qube : [8, 64, 216, 512, 1000, 1728, 2744, 4096, 5832, 8000, 10648, 13824, 17576, 21952, 27000, 32768, 39304, 46656, 54872, 64000, 74088, 85184, 97336, 110592, 125000, 140608, 157464, 175616, 195112, 216000, 238328, 262144, 287496, 314432, 343000, 373248, 405224, 438976, 474552, 512000, 551368, 592704, 636056, 681472, 729000, 778688, 830584, 884736, 941192]\n"
+          ]
+        }
+      ],
+      "source": [
+        "#List Comprehension\n",
+        "even_qube = [i**3 for i in range(1,100) if i%2==0]\n",
+        "print(f\"Even qube : {even_qube}\")\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def flatten_comprehension(t):\n",
+        "  return tuple(\n",
+        "      element for item in t\n",
+        "      for element in (flatten_comprehension(item) if isinstance(item,tuple) else(item,))\n",
+        "\n",
+        ")\n",
+        "def flatten_tow_lavels(t):\n",
+        "  return tuple(element for subtuple in t for element in subtuple)\n",
+        "tu = ((2,3),(3,4),(6,7))\n",
+        "print(flatten_comprehension(tu))\n",
+        "print(flatten_tow_lavels(tu))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LV8p4WtSDTBa",
+        "outputId": "73a91ce6-b433-48a9-ffe7-fb28d08669cd"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "(2, 3, 3, 4, 6, 7)\n",
+            "(2, 3, 3, 4, 6, 7)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#using itertools\n",
+        "from itertools import chain\n",
+        "def flatten_itertools(t):\n",
+        "  return tuple(chain.from_iterable(t)) #olny work for 2nd level\n",
+        "nested = ((1,2),(3,4),(\"a\",\"t\"))\n",
+        "print(flatten_itertools(nested))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "FMcgp9-5HfbT",
+        "outputId": "d7c6877c-93f4-4972-b6dd-0569bbb4fb23"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "(1, 2, 3, 4, 'a', 't')\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "app_config = (\n",
+        "    (\"database\", (\"host\", \"localhost\"), (\"port\", 5432)),\n",
+        "    (\"server\", (\"host\", \"0.0.0.0\"), (\"port\", 8000)),\n",
+        "    (\"logging\", (\"level\", \"INFO\"), (\"file\", \"app.log\"))\n",
+        ")\n",
+        "\n",
+        "def get_config_value(config_tree, *keys):\n",
+        "    current = config_tree\n",
+        "    for key in keys:\n",
+        "        for item in current:\n",
+        "            if item[0] == key:\n",
+        "                current = item[1]\n",
+        "                break\n",
+        "        else:\n",
+        "            return None\n",
+        "    return current\n",
+        "\n",
+        "# ব্যবহার\n",
+        "db_host = get_config_value(app_config, \"database\", \"host\")  # \"localhost\""
+      ],
+      "metadata": {
+        "id": "9mbenmAwIG93"
+      },
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "s_l = [1,2,3,4,5,6,6]\n",
+        "\n",
+        "for i,val in enumerate(s_l):\n",
+        "  print(f\"{i}th value is : {val}\\n\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "PBWWbOCKG6n_",
+        "outputId": "95f81df0-aa13-4b8e-a915-6bd403a79594"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "0th value is : 1\n",
+            "\n",
+            "1th value is : 2\n",
+            "\n",
+            "2th value is : 3\n",
+            "\n",
+            "3th value is : 4\n",
+            "\n",
+            "4th value is : 5\n",
+            "\n",
+            "5th value is : 6\n",
+            "\n",
+            "6th value is : 6\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "col = ['id','name']\n",
+        "row = [1,\"Shihab\"]\n",
+        "\n",
+        "mattrics = zip(col,row)\n",
+        "print(list(mattrics))\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "taNhWzCqJlTz",
+        "outputId": "df45130f-1149-441a-c60a-1e67361f544c"
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[('id', 1), ('name', 'Shihab')]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nums = [1,2,3,4,5,6,7,8,9]\n",
+        "\n",
+        "# ✅ সঠিক উপায় ১: map object-কে list-এ convert করে\n",
+        "result = list(map(lambda x: x, nums))\n",
+        "print(result)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QOSOxbVOKCNh",
+        "outputId": "f17ebfd6-dbb1-4011-d4d1-928b5e34f6a3"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[1, 2, 3, 4, 5, 6, 7, 8, 9]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nums = [1,2,3,4,5,6,7,8,9]\n",
+        "print(list(filter(lambda x:x%2==0,nums)))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "UDrpSRGvL4p3",
+        "outputId": "6df9d2fe-9ed1-4a32-b193-276b37052d6a"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[2, 4, 6, 8]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "xH13DTp0MSDG"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
